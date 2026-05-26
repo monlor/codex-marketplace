@@ -27,7 +27,6 @@ test -f "$REPO_ROOT/plugins/openviking-memory/.mcp.json"
 test ! -f "$REPO_ROOT/plugins/openviking-memory-no-mcp/.mcp.json"
 test -f "$REPO_ROOT/plugins/openviking-memory/hooks/hooks.json"
 test -f "$REPO_ROOT/plugins/openviking-memory-no-mcp/hooks/hooks.json"
-test -f "$REPO_ROOT/scripts/render-openviking-plugin-cache.sh"
 
 jq -e '.mcpServers.codegraph.command == "bash"' \
   "$REPO_ROOT/plugins/codegraph/.mcp.json" >/dev/null
@@ -38,7 +37,31 @@ jq -e '.mcpServers.codegraph.args[0] == "-lc"' \
 jq -e '.mcpServers.codegraph.args[1] | contains("codegraph-mcp.sh")' \
   "$REPO_ROOT/plugins/codegraph/.mcp.json" >/dev/null
 
-jq -e '.mcpServers["openviking-memory"].url == "__OPENVIKING_MCP_URL__"' \
+jq -e '.mcpServers["openviking-memory"].url == "http://127.0.0.1:1933/mcp"' \
   "$REPO_ROOT/plugins/openviking-memory/.mcp.json" >/dev/null
+
+jq -e '.hooks.SessionStart[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/session-start-commit.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.UserPromptSubmit[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/auto-recall.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.Stop[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/auto-capture.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.PreCompact[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/pre-compact-capture.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.SessionStart[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/session-start-commit.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory-no-mcp/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.UserPromptSubmit[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/auto-recall.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory-no-mcp/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.Stop[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/auto-capture.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory-no-mcp/hooks/hooks.json" >/dev/null
+
+jq -e '.hooks.PreCompact[0].hooks[0].command == "node ${PLUGIN_ROOT}/scripts/pre-compact-capture.mjs"' \
+  "$REPO_ROOT/plugins/openviking-memory-no-mcp/hooks/hooks.json" >/dev/null
 
 echo "Marketplace metadata and plugin manifests validated."

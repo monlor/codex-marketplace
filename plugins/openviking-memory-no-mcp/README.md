@@ -14,13 +14,11 @@ Use this version when you want Codex memory hooks, but prefer to add MCP yoursel
 
 This plugin expects an OpenViking server to be reachable. By default the hook scripts target `http://127.0.0.1:1933`.
 
-## Important Install Step
+## Hook Runtime
 
-After `codex plugin add`, render the cached plugin copy so Codex hooks use absolute paths:
+Modern Codex injects `PLUGIN_ROOT` and `PLUGIN_DATA` for plugin hooks. This plugin uses that contract directly, so there is no post-install cache rewrite step.
 
-```bash
-./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory-no-mcp
-```
+Enable `plugin_hooks = true` and trust the hooks when Codex asks.
 
 ## Manual MCP
 
@@ -29,7 +27,7 @@ If you also want MCP, add it yourself in the relevant Codex config. This plugin 
 ## Validation
 
 ```bash
-./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory-no-mcp
+codex plugin add openviking-memory-no-mcp@monlor-marketplace
 ```
 
-Then inspect the cached copy under `~/.codex/plugins/cache/monlor-marketplace/openviking-memory-no-mcp/`.
+Then inspect the cached copy under `~/.codex/plugins/cache/monlor-marketplace/openviking-memory-no-mcp/<version>/` and verify `hooks/hooks.json` still contains `${PLUGIN_ROOT}` commands.

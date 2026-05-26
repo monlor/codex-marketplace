@@ -21,6 +21,17 @@ CONFIG_PATH="$CODEX_HOME_DIR/config.toml"
 TEMPLATE_PATH="$REPO_ROOT/config/ai/codex/config.toml"
 MARKETPLACE_NAME="monlor-marketplace"
 
+ensure_plugin_hooks_enabled() {
+  local config_path="$1/config.toml"
+
+  mkdir -p "$1"
+  touch "$config_path"
+
+  if ! grep -Eq '^[[:space:]]*plugin_hooks[[:space:]]*=' "$config_path"; then
+    printf '\nplugin_hooks = true\n' >>"$config_path"
+  fi
+}
+
 if [ "$#" -eq 0 ]; then
   set -- caveman rtk codegraph
 fi
@@ -30,6 +41,7 @@ mkdir -p "$CODEX_HOME_DIR"
 if [ ! -f "$CONFIG_PATH" ]; then
   cp "$TEMPLATE_PATH" "$CONFIG_PATH"
 fi
+ensure_plugin_hooks_enabled "$CODEX_HOME_DIR"
 
 CODEX_HOME="$CODEX_HOME_DIR" codex plugin marketplace add "$REPO_ROOT" >/dev/null
 
@@ -37,11 +49,6 @@ for plugin in "$@"; do
   case "$plugin" in
     caveman|rtk|codegraph|openviking-memory|openviking-memory-no-mcp)
       CODEX_HOME="$CODEX_HOME_DIR" codex plugin add "$plugin@$MARKETPLACE_NAME" >/dev/null
-      case "$plugin" in
-        openviking-memory|openviking-memory-no-mcp)
-          "$SCRIPT_DIR/render-openviking-plugin-cache.sh" "$CODEX_HOME_DIR" "$plugin" >/dev/null
-          ;;
-      esac
       ;;
     *)
       echo "unknown plugin: $plugin" >&2

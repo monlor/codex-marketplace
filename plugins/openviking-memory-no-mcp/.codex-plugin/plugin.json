@@ -17,7 +17,6 @@
     "codex"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "OpenViking Memory No MCP",
     "shortDescription": "Codex memory plugin without MCP wiring",

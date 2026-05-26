@@ -10,23 +10,15 @@ Codex marketplace for these plugins:
 
 ## Quick Start
 
-Add this marketplace from the remote Git repository:
+Add this marketplace:
 
 ```bash
-./scripts/install-marketplace.sh
+codex plugin marketplace add https://github.com/monlor/codex-marketplace.git
 ```
 
 Repository name: `codex-marketplace`
 
 Codex marketplace name: `monlor-marketplace`
-
-## Add This Marketplace
-
-Add the marketplace:
-
-```bash
-codex plugin marketplace add https://github.com/monlor/codex-marketplace.git
-```
 
 ## View Marketplaces And Plugins
 
@@ -54,20 +46,18 @@ codex plugin add openviking-memory@monlor-marketplace
 codex plugin add openviking-memory-no-mcp@monlor-marketplace
 ```
 
-Or install the default bundle with one command:
+If you use plugin hooks, ensure they are enabled in your target Codex config:
 
 ```bash
-./scripts/install-marketplace.sh
+plugin_hooks = true
 ```
 
-Install a custom plugin set:
+Recommended default bundle:
 
 ```bash
-./scripts/install-marketplace.sh caveman
-./scripts/install-marketplace.sh rtk
-./scripts/install-marketplace.sh codegraph
-./scripts/install-marketplace.sh openviking-memory
-./scripts/install-marketplace.sh openviking-memory-no-mcp
+codex plugin add caveman@monlor-marketplace
+codex plugin add rtk@monlor-marketplace
+codex plugin add codegraph@monlor-marketplace
 ```
 
 ## Optional Isolated Setup
@@ -114,12 +104,12 @@ codex doctor
 codex plugin list --marketplace monlor-marketplace
 ```
 
-If OpenViking hooks do not run, render placeholders in the cached plugin copy:
+If OpenViking hooks do not run:
 
-```bash
-./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory
-./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory-no-mcp
-```
+- ensure `plugin_hooks = true`
+- trust the plugin hooks when Codex prompts for approval
+- confirm your Codex runtime supports plugin hook env vars such as `PLUGIN_ROOT`
+- for non-default OpenViking MCP endpoints, override MCP config yourself instead of expecting plugin-side URL rendering
 
 ## Development
 
@@ -134,9 +124,7 @@ plugins/codegraph                  Skill + MCP plugin
 plugins/openviking-memory          Hook + MCP plugin
 plugins/openviking-memory-no-mcp   Hook-only plugin
 scripts/bootstrap-project-home.sh  Optional project-scoped installer
-scripts/install-marketplace.sh     Default global installer
 scripts/check-external-cli.mjs     Shared external CLI checker
-scripts/render-openviking-plugin-cache.sh  Cache placeholder renderer
 scripts/validate-marketplace.sh    Manifest and layout validation
 scripts/smoke-test-install.sh      Global install-flow test
 ```

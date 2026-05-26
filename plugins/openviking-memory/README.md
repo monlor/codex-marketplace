@@ -12,13 +12,11 @@ It includes:
 
 This plugin expects an OpenViking server to be reachable. By default it targets `http://127.0.0.1:1933`.
 
-## Important Install Step
+## Hook Runtime
 
-After `codex plugin add`, render the cached plugin copy so Codex hooks use absolute paths:
+Modern Codex injects `PLUGIN_ROOT` and `PLUGIN_DATA` for plugin hooks. This plugin uses that contract directly, so there is no post-install cache rewrite step.
 
-```bash
-./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory
-```
+Enable `plugin_hooks = true` and trust the hooks when Codex asks.
 
 ## Configuration
 
@@ -31,12 +29,13 @@ Connection and identity are resolved from:
 - `OPENVIKING_AGENT_ID`
 - `OPENVIKING_CLI_CONFIG_FILE` or `~/.openviking/ovcli.conf`
 
-The MCP cache renderer also resolves `OPENVIKING_MCP_URL` when set.
+Bundled MCP uses the default endpoint `http://127.0.0.1:1933/mcp`.
+If you need a different MCP URL, override your user or project MCP config manually.
 
 ## Validation
 
 ```bash
-./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory
+codex plugin add openviking-memory@monlor-marketplace
 ```
 
-Then inspect the cached copy under `~/.codex/plugins/cache/monlor-marketplace/openviking-memory/`.
+Then inspect the cached copy under `~/.codex/plugins/cache/monlor-marketplace/openviking-memory/<version>/` and verify `hooks/hooks.json` still contains `${PLUGIN_ROOT}` commands.
