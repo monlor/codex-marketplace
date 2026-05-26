@@ -17,10 +17,8 @@ This plugin expects an OpenViking server to be reachable. By default it targets 
 After `codex plugin add`, render the cached plugin copy so Codex hooks use absolute paths:
 
 ```bash
-./scripts/render-openviking-plugin-cache.sh /path/to/project/.codex-home openviking-memory
+./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory
 ```
-
-`./scripts/bootstrap-project-home.sh /path/to/project openviking-memory` already does this for you.
 
 ## Configuration
 
@@ -38,7 +36,7 @@ The MCP cache renderer also resolves `OPENVIKING_MCP_URL` when set.
 ## Validation
 
 ```bash
-./scripts/render-openviking-plugin-cache.sh /path/to/project/.codex-home openviking-memory
+./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory
 ```
 
-Then inspect the cached copy under `/path/to/project/.codex-home/plugins/cache/codex-tooling-local/openviking-memory/`.
+Then inspect the cached copy under `~/.codex/plugins/cache/monlor-marketplace/openviking-memory/`.

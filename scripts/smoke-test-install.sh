@@ -11,34 +11,34 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
-PROJECT_DIR="$TMP_DIR/sample-project"
-mkdir -p "$PROJECT_DIR"
+TEST_HOME="$TMP_DIR/home"
+mkdir -p "$TEST_HOME"
 
-"$SCRIPT_DIR/bootstrap-project-home.sh" "$PROJECT_DIR" caveman rtk codegraph >/dev/null
+HOME="$TEST_HOME" "$SCRIPT_DIR/install-marketplace.sh" caveman rtk codegraph >/dev/null
 
-CODEX_HOME="$PROJECT_DIR/.codex-home" codex plugin marketplace list | grep -q 'monlor-marketplace'
-CODEX_HOME="$PROJECT_DIR/.codex-home" codex plugin list --marketplace monlor-marketplace | grep -q 'caveman'
-CODEX_HOME="$PROJECT_DIR/.codex-home" codex plugin list --marketplace monlor-marketplace | grep -q 'rtk'
-CODEX_HOME="$PROJECT_DIR/.codex-home" codex plugin list --marketplace monlor-marketplace | grep -q 'codegraph'
+HOME="$TEST_HOME" codex plugin marketplace list | grep -q 'monlor-marketplace'
+HOME="$TEST_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'caveman'
+HOME="$TEST_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'rtk'
+HOME="$TEST_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'codegraph'
 
-grep -q '\[plugins."caveman@monlor-marketplace"\]' "$PROJECT_DIR/.codex-home/config.toml"
-grep -q '\[plugins."rtk@monlor-marketplace"\]' "$PROJECT_DIR/.codex-home/config.toml"
-grep -q '\[plugins."codegraph@monlor-marketplace"\]' "$PROJECT_DIR/.codex-home/config.toml"
+grep -q '\[plugins."caveman@monlor-marketplace"\]' "$TEST_HOME/.codex/config.toml"
+grep -q '\[plugins."rtk@monlor-marketplace"\]' "$TEST_HOME/.codex/config.toml"
+grep -q '\[plugins."codegraph@monlor-marketplace"\]' "$TEST_HOME/.codex/config.toml"
 
-OV_PROJECT_DIR="$TMP_DIR/openviking-project"
-mkdir -p "$OV_PROJECT_DIR"
+OV_HOME="$TMP_DIR/openviking-home"
+mkdir -p "$OV_HOME"
 
-"$SCRIPT_DIR/bootstrap-project-home.sh" "$OV_PROJECT_DIR" openviking-memory openviking-memory-no-mcp >/dev/null
+HOME="$OV_HOME" "$SCRIPT_DIR/install-marketplace.sh" openviking-memory openviking-memory-no-mcp >/dev/null
 
-CODEX_HOME="$OV_PROJECT_DIR/.codex-home" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-memory'
-CODEX_HOME="$OV_PROJECT_DIR/.codex-home" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-memory-no-mcp'
+HOME="$OV_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-memory'
+HOME="$OV_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-memory-no-mcp'
 
-grep -q '\[plugins."openviking-memory@monlor-marketplace"\]' "$OV_PROJECT_DIR/.codex-home/config.toml"
-grep -q '\[plugins."openviking-memory-no-mcp@monlor-marketplace"\]' "$OV_PROJECT_DIR/.codex-home/config.toml"
+grep -q '\[plugins."openviking-memory@monlor-marketplace"\]' "$OV_HOME/.codex/config.toml"
+grep -q '\[plugins."openviking-memory-no-mcp@monlor-marketplace"\]' "$OV_HOME/.codex/config.toml"
 
-OV_CACHE_ROOT="$OV_PROJECT_DIR/.codex-home/plugins/cache/monlor-marketplace"
+OV_CACHE_ROOT="$OV_HOME/.codex/plugins/cache/monlor-marketplace"
 find "$OV_CACHE_ROOT/openviking-memory" -name hooks.json -exec grep -qv '__OPENVIKING_PLUGIN_ROOT__' {} \;
 find "$OV_CACHE_ROOT/openviking-memory-no-mcp" -name hooks.json -exec grep -qv '__OPENVIKING_PLUGIN_ROOT__' {} \;
 find "$OV_CACHE_ROOT/openviking-memory" -name .mcp.json -exec grep -q '"url": "http://127.0.0.1:1933/mcp"' {} \;
 
-echo "Project-scoped install flow validated in $PROJECT_DIR"
+echo "Global install flow validated in $TEST_HOME/.codex"

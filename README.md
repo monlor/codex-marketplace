@@ -1,6 +1,6 @@
 # codex-marketplace
 
-Local Codex marketplace for these plugins:
+Codex marketplace for these plugins:
 
 - `caveman`: terse response mode as a skill-first plugin
 - `rtk`: `rtk` wrapper guidance plus host-runtime checks
@@ -10,25 +10,11 @@ Local Codex marketplace for these plugins:
 
 ## Quick Start
 
-Fastest path for a target project:
+Add this marketplace from the remote Git repository:
 
 ```bash
-./scripts/bootstrap-project-home.sh /path/to/target-project
+./scripts/install-marketplace.sh
 ```
-
-That script:
-
-1. creates `/path/to/target-project/.codex-home/config.toml` from [`config/ai/codex/config.toml`](/Users/monlor/Workspace/codex-marketplace/config/ai/codex/config.toml)
-2. adds this repo as a local marketplace to that project-scoped `CODEX_HOME`
-3. installs `caveman`, `rtk`, and `codegraph`
-
-Start Codex with that isolated home:
-
-```bash
-CODEX_HOME=/path/to/target-project/.codex-home codex
-```
-
-This keeps the setup project-local and avoids changing your global `~/.codex/config.toml`.
 
 Repository name: `codex-marketplace`
 
@@ -36,16 +22,10 @@ Codex marketplace name: `monlor-marketplace`
 
 ## Add This Marketplace
 
-Add the marketplace to your default Codex setup:
+Add the marketplace:
 
 ```bash
-codex plugin marketplace add /absolute/path/to/codex-marketplace
-```
-
-Add it to a project-scoped Codex home instead:
-
-```bash
-CODEX_HOME=/path/to/project/.codex-home codex plugin marketplace add /absolute/path/to/codex-marketplace
+codex plugin marketplace add https://github.com/monlor/codex-marketplace.git
 ```
 
 ## View Marketplaces And Plugins
@@ -62,8 +42,6 @@ List plugins from this marketplace:
 codex plugin list --marketplace monlor-marketplace
 ```
 
-If you are using a project-scoped home, prefix the same commands with `CODEX_HOME=/path/to/project/.codex-home`.
-
 ## Install Plugins
 
 Install any plugin from this marketplace:
@@ -76,15 +54,28 @@ codex plugin add openviking-memory@monlor-marketplace
 codex plugin add openviking-memory-no-mcp@monlor-marketplace
 ```
 
-Project-scoped example:
+Or install the default bundle with one command:
 
 ```bash
-CODEX_HOME=/path/to/project/.codex-home codex plugin add caveman@monlor-marketplace
+./scripts/install-marketplace.sh
 ```
 
-Or use the bootstrap script to install one or more plugins into a project-local Codex home:
+Install a custom plugin set:
 
 ```bash
+./scripts/install-marketplace.sh caveman
+./scripts/install-marketplace.sh rtk
+./scripts/install-marketplace.sh codegraph
+./scripts/install-marketplace.sh openviking-memory
+./scripts/install-marketplace.sh openviking-memory-no-mcp
+```
+
+## Optional Isolated Setup
+
+If you explicitly want a project-local Codex home instead of the global default, use the bootstrap script:
+
+```bash
+./scripts/bootstrap-project-home.sh /path/to/target-project
 ./scripts/bootstrap-project-home.sh /path/to/target-project caveman
 ./scripts/bootstrap-project-home.sh /path/to/target-project rtk
 ./scripts/bootstrap-project-home.sh /path/to/target-project codegraph
@@ -126,8 +117,8 @@ codex plugin list --marketplace monlor-marketplace
 If OpenViking hooks do not run, render placeholders in the cached plugin copy:
 
 ```bash
-./scripts/render-openviking-plugin-cache.sh /path/to/project/.codex-home openviking-memory
-./scripts/render-openviking-plugin-cache.sh /path/to/project/.codex-home openviking-memory-no-mcp
+./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory
+./scripts/render-openviking-plugin-cache.sh ~/.codex openviking-memory-no-mcp
 ```
 
 ## Development
@@ -136,17 +127,18 @@ Repository layout:
 
 ```text
 .agents/plugins/marketplace.json   Marketplace metadata
-config/ai/codex/config.toml        Baseline config for project-scoped CODEX_HOME
+config/ai/codex/config.toml        Baseline config for optional project-scoped installs
 plugins/caveman                    Skill-only plugin
 plugins/rtk                        Skill + shell wrapper plugin
 plugins/codegraph                  Skill + MCP plugin
 plugins/openviking-memory          Hook + MCP plugin
 plugins/openviking-memory-no-mcp   Hook-only plugin
-scripts/bootstrap-project-home.sh  Project-scoped installer
+scripts/bootstrap-project-home.sh  Optional project-scoped installer
+scripts/install-marketplace.sh     Default global installer
 scripts/check-external-cli.mjs     Shared external CLI checker
 scripts/render-openviking-plugin-cache.sh  Cache placeholder renderer
 scripts/validate-marketplace.sh    Manifest and layout validation
-scripts/smoke-test-install.sh      Isolated install-flow test
+scripts/smoke-test-install.sh      Global install-flow test
 ```
 
 Validate the repository structure and manifest JSON:

@@ -13,7 +13,7 @@
 After installing the plugin:
 
 ```bash
-CODEX_HOME=/path/to/project/.codex-home codex plugin list --marketplace codex-tooling-local
+codex plugin list --marketplace monlor-marketplace
 ```
 
-Then start Codex from the same `CODEX_HOME` and request `caveman` mode in a prompt.
+Then request `caveman` mode in a prompt.
