@@ -1,7 +1,7 @@
 {
   "name": "monlor-marketplace",
   "interface": {
-    "displayName": "Monlor Marketplace"
+    "displayName": "monlor-marketplace"
   },
   "plugins": [
     {
