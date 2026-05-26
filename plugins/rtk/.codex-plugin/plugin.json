@@ -1,0 +1,34 @@
+{
+  "name": "rtk",
+  "version": "0.1.0",
+  "description": "RTK wrapper guidance for Codex with project-local validation helpers.",
+  "author": {
+    "name": "monlor"
+  },
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "rtk",
+    "cli",
+    "token-optimization"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "RTK",
+    "shortDescription": "Guide Codex to prefer rtk-prefixed commands",
+    "longDescription": "Install RTK when you want Codex to favor rtk-prefixed shell commands and to validate whether the host runtime is available.",
+    "developerName": "monlor",
+    "category": "Coding",
+    "brandColor": "#00E599",
+    "logo": "./assets/rtk-logo.svg",
+    "composerIcon": "./assets/rtk-logo.svg",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use rtk wrappers for shell commands in this repo."
+    ]
+  }
+}

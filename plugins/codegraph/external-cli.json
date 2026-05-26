@@ -1,0 +1,12 @@
+{
+  "name": "codegraph",
+  "command": "codegraph",
+  "versionArgs": [
+    "--version"
+  ],
+  "missingMessage": "codegraph host runtime not found on PATH.",
+  "degradedMessage": "The plugin can stay installed, but MCP startup will fail until the runtime is present.",
+  "installHints": {
+    "default": "Install or expose the codegraph binary before enabling this plugin's MCP bridge."
+  }
+}

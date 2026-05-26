@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "codegraph": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "set -euo pipefail; codex_home=\"${CODEX_HOME:-$HOME/.codex}\"; cache_root=\"$codex_home/plugins/cache/codex-tooling-local/codegraph\"; [ -d \"$cache_root\" ] || { echo \"codegraph plugin cache not found: $cache_root\" >&2; exit 1; }; plugin_root=\"$(find \"$cache_root\" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)\"; [ -n \"$plugin_root\" ] || { echo \"codegraph plugin version directory not found under: $cache_root\" >&2; exit 1; }; exec \"$plugin_root/scripts/codegraph-mcp.sh\""
+      ]
+    }
+  }
+}

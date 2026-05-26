@@ -1,0 +1,38 @@
+{
+  "name": "openviking-memory-no-mcp",
+  "version": "0.5.0",
+  "description": "Long-term semantic memory for Codex, powered by OpenViking, without bundled MCP wiring.",
+  "author": {
+    "name": "OpenViking",
+    "url": "https://github.com/volcengine/OpenViking"
+  },
+  "repository": "https://github.com/volcengine/OpenViking",
+  "license": "Apache-2.0",
+  "keywords": [
+    "memory",
+    "openviking",
+    "semantic-search",
+    "long-term-memory",
+    "context-engine",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "OpenViking Memory No MCP",
+    "shortDescription": "Codex memory plugin without MCP wiring",
+    "longDescription": "Hooks Codex lifecycle events into OpenViking for recall and capture, but leaves MCP configuration to the user.",
+    "developerName": "OpenViking",
+    "category": "Productivity",
+    "brandColor": "#0F766E",
+    "logo": "./assets/openviking-logo.png",
+    "composerIcon": "./assets/openviking-logo.png",
+    "capabilities": [
+      "Memory recall",
+      "Auto memory capture"
+    ],
+    "defaultPrompt": [
+      "Use OpenViking memory hooks for long-term recall and capture."
+    ]
+  }
+}

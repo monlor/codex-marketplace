@@ -1,0 +1,35 @@
+{
+  "name": "codegraph",
+  "version": "0.1.0",
+  "description": "CodeGraph MCP bridge for Codex with host-runtime checks and startup guidance.",
+  "author": {
+    "name": "monlor"
+  },
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "codegraph",
+    "mcp",
+    "code-intelligence"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "CodeGraph",
+    "shortDescription": "Use CodeGraph MCP when the repo supports it",
+    "longDescription": "Install CodeGraph to expose an MCP bridge for structural code navigation and impact analysis when the host codegraph runtime is available.",
+    "developerName": "monlor",
+    "category": "Coding",
+    "brandColor": "#0E1726",
+    "logo": "./assets/codegraph-logo.svg",
+    "composerIcon": "./assets/codegraph-logo.svg",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use CodeGraph MCP for codebase structure when available."
+    ]
+  }
+}

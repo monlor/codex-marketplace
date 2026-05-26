@@ -1,0 +1,34 @@
+{
+  "name": "caveman",
+  "version": "0.1.0",
+  "description": "Terse response mode for Codex as a skill-first plugin.",
+  "author": {
+    "name": "monlor"
+  },
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "prompting",
+    "terse",
+    "caveman"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Caveman",
+    "shortDescription": "Compact technical response mode",
+    "longDescription": "Install Caveman when you want terse technical output with no filler and clear risk and verification details.",
+    "developerName": "monlor",
+    "category": "Coding",
+    "brandColor": "#5C4632",
+    "logo": "./assets/caveman-logo.svg",
+    "composerIcon": "./assets/caveman-logo.svg",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use caveman mode for this task."
+    ]
+  }
+}

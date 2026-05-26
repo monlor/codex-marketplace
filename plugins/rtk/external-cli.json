@@ -1,0 +1,12 @@
+{
+  "name": "rtk",
+  "command": "rtk",
+  "versionArgs": [
+    "--version"
+  ],
+  "missingMessage": "rtk host runtime not found on PATH.",
+  "degradedMessage": "Plugin install can remain enabled, but runtime command proxying is unavailable.",
+  "installHints": {
+    "default": "Install rtk before relying on this plugin's command wrapper."
+  }
+}
