@@ -31,6 +31,7 @@
  */
 
 import { loadConfig } from "./config.mjs";
+import { openVikingConnectionWarning } from "./connection-warning.mjs";
 import { createLogger } from "./debug-log.mjs";
 import { clearState, listStates } from "./session-state.mjs";
 
@@ -74,6 +75,29 @@ async function fetchJSON(path, init = {}) {
     return body.result ?? body;
   } catch {
     return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function fetchHealthStatus() {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), cfg.captureTimeoutMs);
+  try {
+    const headers = { "Content-Type": "application/json" };
+    if (cfg.apiKey) {
+      headers["Authorization"] = `Bearer ${cfg.apiKey}`;
+      headers["X-API-Key"] = cfg.apiKey;
+    }
+    if (cfg.account) headers["X-OpenViking-Account"] = cfg.account;
+    if (cfg.user) headers["X-OpenViking-User"] = cfg.user;
+    if (cfg.agentId) headers["X-OpenViking-Agent"] = cfg.agentId;
+    const res = await fetch(`${cfg.baseUrl}/health`, { headers, signal: controller.signal });
+    const body = await res.json().catch(() => null);
+    if (res.ok && body && body.status !== "error") return { ok: true, result: body.result ?? body };
+    return { ok: false, status: res.status, type: "http" };
+  } catch {
+    return { ok: false, type: "network" };
   } finally {
     clearTimeout(timer);
   }
@@ -155,10 +179,10 @@ async function main() {
     return;
   }
 
-  const health = await fetchJSON("/health");
-  if (!health) {
+  const health = await fetchHealthStatus();
+  if (!health.ok) {
     logError("health_check", "server unreachable; skipping commit + sweep");
-    noop();
+    noop(openVikingConnectionWarning(cfg, health));
     return;
   }
 
