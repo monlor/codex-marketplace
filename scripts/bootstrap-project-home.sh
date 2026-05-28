@@ -47,7 +47,7 @@ CODEX_HOME="$CODEX_HOME_DIR" codex plugin marketplace add "$REPO_ROOT" >/dev/nul
 
 for plugin in "$@"; do
   case "$plugin" in
-    caveman|rtk|codegraph|openviking-memory|openviking-memory-no-mcp)
+    caveman|rtk|codegraph|openviking-memory|openviking-mcphub)
       CODEX_HOME="$CODEX_HOME_DIR" codex plugin add "$plugin@$MARKETPLACE_NAME" >/dev/null
       ;;
     *)

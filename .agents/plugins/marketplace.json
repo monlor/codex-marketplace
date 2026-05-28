@@ -53,10 +53,10 @@
       "category": "Productivity"
     },
     {
-      "name": "openviking-memory-no-mcp",
+      "name": "openviking-mcphub",
       "source": {
         "source": "local",
-        "path": "./plugins/openviking-memory-no-mcp"
+        "path": "./plugins/openviking-mcphub"
       },
       "policy": {
         "installation": "AVAILABLE",

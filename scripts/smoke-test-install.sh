@@ -48,26 +48,26 @@ mkdir -p "$OV_HOME"
 ensure_plugin_hooks_enabled "$OV_HOME/.codex"
 HOME="$OV_HOME" codex plugin marketplace add "$REPO_ROOT" >/dev/null
 HOME="$OV_HOME" codex plugin add openviking-memory@monlor-marketplace >/dev/null
-HOME="$OV_HOME" codex plugin add openviking-memory-no-mcp@monlor-marketplace >/dev/null
+HOME="$OV_HOME" codex plugin add openviking-mcphub@monlor-marketplace >/dev/null
 
 HOME="$OV_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-memory'
-HOME="$OV_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-memory-no-mcp'
+HOME="$OV_HOME" codex plugin list --marketplace monlor-marketplace | grep -q 'openviking-mcphub'
 
 grep -q '\[plugins."openviking-memory@monlor-marketplace"\]' "$OV_HOME/.codex/config.toml"
-grep -q '\[plugins."openviking-memory-no-mcp@monlor-marketplace"\]' "$OV_HOME/.codex/config.toml"
+grep -q '\[plugins."openviking-mcphub@monlor-marketplace"\]' "$OV_HOME/.codex/config.toml"
 grep -Eq '^[[:space:]]*plugin_hooks[[:space:]]*=[[:space:]]*true' "$OV_HOME/.codex/config.toml"
 
 OV_CACHE_ROOT="$OV_HOME/.codex/plugins/cache/monlor-marketplace"
 OV_PLUGIN_ROOT="$(find "$OV_CACHE_ROOT/openviking-memory" -path '*/.codex-plugin/plugin.json' -print -quit | xargs dirname | xargs dirname)"
-OV_NO_MCP_PLUGIN_ROOT="$(find "$OV_CACHE_ROOT/openviking-memory-no-mcp" -path '*/.codex-plugin/plugin.json' -print -quit | xargs dirname | xargs dirname)"
+OV_MCPHUB_PLUGIN_ROOT="$(find "$OV_CACHE_ROOT/openviking-mcphub" -path '*/.codex-plugin/plugin.json' -print -quit | xargs dirname | xargs dirname)"
 
 test -n "$OV_PLUGIN_ROOT"
-test -n "$OV_NO_MCP_PLUGIN_ROOT"
+test -n "$OV_MCPHUB_PLUGIN_ROOT"
 
 ! rg -n '__OPENVIKING_PLUGIN_ROOT__' "$OV_CACHE_ROOT/openviking-memory" >/dev/null
-! rg -n '__OPENVIKING_PLUGIN_ROOT__' "$OV_CACHE_ROOT/openviking-memory-no-mcp" >/dev/null
+! rg -n '__OPENVIKING_PLUGIN_ROOT__' "$OV_CACHE_ROOT/openviking-mcphub" >/dev/null
 find "$OV_CACHE_ROOT/openviking-memory" -name hooks.json -exec grep -q 'node ${PLUGIN_ROOT}/scripts/session-start-commit.mjs' {} \;
-find "$OV_CACHE_ROOT/openviking-memory-no-mcp" -name hooks.json -exec grep -q 'node ${PLUGIN_ROOT}/scripts/session-start-commit.mjs' {} \;
+find "$OV_CACHE_ROOT/openviking-mcphub" -name hooks.json -exec grep -q 'node ${PLUGIN_ROOT}/scripts/session-start-commit.mjs' {} \;
 find "$OV_CACHE_ROOT/openviking-memory" -name .mcp.json -exec grep -q '"url": "http://127.0.0.1:1933/mcp"' {} \;
 find "$TEST_HOME/.codex/plugins/cache/monlor-marketplace/codegraph" -name .mcp.json -exec grep -q 'plugins/cache/monlor-marketplace/codegraph' {} \;
 

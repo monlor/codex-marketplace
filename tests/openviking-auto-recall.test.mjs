@@ -33,7 +33,7 @@ function runAutoRecall(scriptPath) {
 
 for (const scriptPath of [
   "plugins/openviking-memory/scripts/auto-recall.mjs",
-  "plugins/openviking-memory-no-mcp/scripts/auto-recall.mjs",
+  "plugins/openviking-mcphub/scripts/auto-recall.mjs",
 ]) {
   test(`${scriptPath} emits schema-compliant no-op on health failures`, () => {
     const output = runAutoRecall(scriptPath);

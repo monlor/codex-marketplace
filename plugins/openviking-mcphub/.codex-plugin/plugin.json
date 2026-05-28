@@ -1,7 +1,7 @@
 {
-  "name": "openviking-memory-no-mcp",
+  "name": "openviking-mcphub",
   "version": "0.5.0",
-  "description": "Long-term semantic memory for Codex, powered by OpenViking, without bundled MCP wiring.",
+  "description": "Long-term semantic memory for Codex, powered by OpenViking, with MCPHub-managed MCP access.",
   "author": {
     "name": "OpenViking",
     "url": "https://github.com/volcengine/OpenViking"
@@ -19,9 +19,9 @@
   "skills": "./skills/",
   "hooks": "./hooks/hooks.json",
   "interface": {
-    "displayName": "OpenViking Memory No MCP",
-    "shortDescription": "Codex memory plugin without bundled OpenViking MCP",
-    "longDescription": "Hooks Codex lifecycle events into OpenViking for recall and capture. For direct model access to OpenViking MCP tools, install and configure OpenViking's native MCP endpoint yourself in your user or project Codex config.",
+    "displayName": "OpenViking MCPHub",
+    "shortDescription": "Codex memory plugin that reuses session-provided OpenViking MCP",
+    "longDescription": "Hooks Codex lifecycle events into OpenViking for recall and capture. For direct model access to OpenViking MCP tools, use the current runtime session's OpenViking MCP when it is already exposed through MCPHub.",
     "developerName": "OpenViking",
     "category": "Productivity",
     "brandColor": "#0F766E",
@@ -30,10 +30,10 @@
     "capabilities": [
       "Memory recall",
       "Auto memory capture",
-      "User-managed MCP tools"
+      "Session-provided MCPHub tools"
     ],
     "defaultPrompt": [
-      "Use OpenViking memory when previous context or long-term memory could help. If direct MCP tools are needed, install and configure OpenViking MCP separately."
+      "Use OpenViking memory when previous context or long-term memory could help. If direct MCP tools are needed, prefer the current session's OpenViking MCP from MCPHub."
     ]
   }
 }

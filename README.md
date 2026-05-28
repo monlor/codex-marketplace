@@ -6,7 +6,7 @@ Codex marketplace for these plugins:
 - `rtk`: `rtk` wrapper guidance plus host-runtime checks
 - `codegraph`: CodeGraph MCP bridge plus prerequisite checks
 - `openviking-memory`: OpenViking long-term memory with bundled MCP wiring
-- `openviking-memory-no-mcp`: OpenViking long-term memory hooks without bundled MCP wiring
+- `openviking-mcphub`: OpenViking long-term memory hooks that reuse session-provided MCPHub access
 
 ## Quick Start
 
@@ -43,7 +43,7 @@ codex plugin add caveman@monlor-marketplace
 codex plugin add rtk@monlor-marketplace
 codex plugin add codegraph@monlor-marketplace
 codex plugin add openviking-memory@monlor-marketplace
-codex plugin add openviking-memory-no-mcp@monlor-marketplace
+codex plugin add openviking-mcphub@monlor-marketplace
 ```
 
 If you use plugin hooks, ensure they are enabled in your target Codex config:
@@ -70,7 +70,7 @@ If you explicitly want a project-local Codex home instead of the global default,
 ./scripts/bootstrap-project-home.sh /path/to/target-project rtk
 ./scripts/bootstrap-project-home.sh /path/to/target-project codegraph
 ./scripts/bootstrap-project-home.sh /path/to/target-project openviking-memory
-./scripts/bootstrap-project-home.sh /path/to/target-project openviking-memory-no-mcp
+./scripts/bootstrap-project-home.sh /path/to/target-project openviking-mcphub
 ```
 
 ## Plugin Notes
@@ -81,9 +81,9 @@ If you explicitly want a project-local Codex home instead of the global default,
 | `rtk` | skills and shell wrapper | `rtk` on `PATH` | wrapper exits with setup guidance |
 | `codegraph` | skills, MCP bridge, wrapper script | `codegraph` on `PATH` | MCP wrapper exits with setup guidance |
 | `openviking-memory` | skills, hooks, MCP config | reachable OpenViking server | hooks and MCP stay inert until configured |
-| `openviking-memory-no-mcp` | skills and hooks only | reachable OpenViking server | hooks stay inert until configured; MCP is user-managed |
+| `openviking-mcphub` | skills and hooks only | reachable OpenViking server and session-provided OpenViking MCP via MCPHub for direct tools | hook-driven recall/capture still works when direct MCP tools are absent |
 
-`caveman`, `rtk`, and `openviking-memory-no-mcp` intentionally do not ship bundled MCP config.
+`caveman`, `rtk`, and `openviking-mcphub` intentionally do not ship bundled MCP config.
 
 ## Troubleshooting
 
@@ -109,7 +109,7 @@ If OpenViking hooks do not run:
 - ensure `plugin_hooks = true`
 - trust the plugin hooks when Codex prompts for approval
 - confirm your Codex runtime supports plugin hook env vars such as `PLUGIN_ROOT`
-- for non-default OpenViking MCP endpoints, override MCP config yourself instead of expecting plugin-side URL rendering
+- for direct MCP access in the hook-only variant, ensure the current session already exposes OpenViking through MCPHub
 
 ## Development
 
@@ -122,7 +122,7 @@ plugins/caveman                    Skill-only plugin
 plugins/rtk                        Skill + shell wrapper plugin
 plugins/codegraph                  Skill + MCP plugin
 plugins/openviking-memory          Hook + MCP plugin
-plugins/openviking-memory-no-mcp   Hook-only plugin
+plugins/openviking-mcphub          Hook-only plugin with session-provided MCPHub dependency
 scripts/bootstrap-project-home.sh  Optional project-scoped installer
 scripts/check-external-cli.mjs     Shared external CLI checker
 scripts/validate-marketplace.sh    Manifest and layout validation
