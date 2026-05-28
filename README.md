@@ -81,9 +81,9 @@ If you explicitly want a project-local Codex home instead of the global default,
 | `rtk` | skills and shell wrapper | `rtk` on `PATH` | wrapper exits with setup guidance |
 | `codegraph` | skills, MCP bridge, wrapper script | `codegraph` on `PATH` | MCP wrapper exits with setup guidance |
 | `openviking-memory` | skills, hooks, MCP config | reachable OpenViking server | hooks and MCP stay inert until configured |
-| `openviking-memory-no-mcp` | skills and hooks only | reachable OpenViking server | hooks stay inert until configured |
+| `openviking-memory-no-mcp` | skills and hooks only | reachable OpenViking server | hooks stay inert until configured; MCP is user-managed |
 
-`caveman`, `rtk`, and `openviking-memory-no-mcp` intentionally do not ship MCP config for the hook-only variant.
+`caveman`, `rtk`, and `openviking-memory-no-mcp` intentionally do not ship bundled MCP config.
 
 ## Troubleshooting
 

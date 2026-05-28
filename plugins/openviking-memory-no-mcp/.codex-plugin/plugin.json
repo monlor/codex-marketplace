@@ -17,10 +17,11 @@
     "codex"
   ],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "OpenViking Memory No MCP",
-    "shortDescription": "Codex memory plugin without MCP wiring",
-    "longDescription": "Hooks Codex lifecycle events into OpenViking for recall and capture, but leaves MCP configuration to the user.",
+    "shortDescription": "Codex memory plugin without bundled OpenViking MCP",
+    "longDescription": "Hooks Codex lifecycle events into OpenViking for recall and capture. For direct model access to OpenViking MCP tools, install and configure OpenViking's native MCP endpoint yourself in your user or project Codex config.",
     "developerName": "OpenViking",
     "category": "Productivity",
     "brandColor": "#0F766E",
@@ -28,10 +29,11 @@
     "composerIcon": "./assets/openviking-logo.png",
     "capabilities": [
       "Memory recall",
-      "Auto memory capture"
+      "Auto memory capture",
+      "User-managed MCP tools"
     ],
     "defaultPrompt": [
-      "Use OpenViking memory hooks for long-term recall and capture."
+      "Use OpenViking memory when previous context or long-term memory could help. If direct MCP tools are needed, install and configure OpenViking MCP separately."
     ]
   }
 }
